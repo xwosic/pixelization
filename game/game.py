@@ -1,5 +1,8 @@
 import pygame
 from game.screen import Screen
+from game.objects.pixel import Pixel
+from game.groups.rects import RectGroup
+
 
 class Game:
     def __init__(self):
@@ -10,13 +13,16 @@ class Game:
         self.FPS = 30
         # states
         self.running = False
-        # everything is in sprite_group
-        self.sprite_group = pygame.sprite.Group()
+        # everything is rect
+        self.rects = RectGroup()
 
     def on_init(self):
         pygame.init()
         self.screen = Screen(tittle='pixelution', width=1200, height=600)
         self.running = True
+
+        p = Pixel(10, 20, 30, 40)
+        self.rects.add(p)
 
     def on_event(self, event):
         if event.type == pygame.QUIT:
@@ -41,7 +47,7 @@ class Game:
 
     def update(self):
         self.screen.screen.fill(self.screen.background_color)
-        self.sprite_group.update()
+        self.rects.update(self.screen.screen)
         pygame.display.update()
 
     def exit(self):
