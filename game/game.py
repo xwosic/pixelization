@@ -2,6 +2,7 @@ import pygame
 from game.screen import Screen
 from game.objects.pixel import Pixel
 from game.groups.rects import RectGroup
+from game.objects.bacteria import Bacteria
 
 
 class Game:
@@ -22,6 +23,8 @@ class Game:
         self.running = True
 
         Pixel(10, 20, 10, 10, groups=[self.rects])
+        b = Bacteria(None, self, 100, 100)
+        print(b.dna)
 
     def on_event(self, event):
         if event.type == pygame.QUIT:
