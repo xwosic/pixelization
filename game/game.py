@@ -21,8 +21,7 @@ class Game:
         self.screen = Screen(tittle='pixelution', width=1200, height=600)
         self.running = True
 
-        p = Pixel(10, 20, 30, 40)
-        self.rects.add(p)
+        Pixel(10, 20, 30, 40, groups=[self.rects])
 
     def on_event(self, event):
         if event.type == pygame.QUIT:

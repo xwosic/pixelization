@@ -12,3 +12,10 @@ class RectGroup:
     def add(self, rect: pg.Rect):
         if rect not in self._rects:
             self._rects.append(rect)
+
+    def remove(self, rect: pg.Rect):
+        if rect in self._rects:
+            self._rects.remove(rect)
+
+    def __getitem__(self, key: int):
+        return self._rects[key]
