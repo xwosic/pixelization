@@ -21,7 +21,7 @@ class Game:
         self.screen = Screen(tittle='pixelution', width=1200, height=600)
         self.running = True
 
-        Pixel(10, 20, 30, 40, groups=[self.rects])
+        Pixel(10, 20, 10, 10, groups=[self.rects])
 
     def on_event(self, event):
         if event.type == pygame.QUIT:
@@ -29,10 +29,7 @@ class Game:
 
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
-                self.running = False
-
-            else:
-                self.keyboard.keyboard_clicked(event)
+                self.running = False               
 
         elif event.type == pygame.MOUSEBUTTONUP:
             pass
