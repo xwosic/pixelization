@@ -18,6 +18,7 @@ class DNA:
     speed: fraction
     size: fraction
     breed_period: fraction
+    max_num_of_children: fraction
     lifetime: fraction
     foo: fraction
 

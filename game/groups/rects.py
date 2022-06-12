@@ -4,6 +4,7 @@ import pygame as pg
 class RectGroup:
     def __init__(self, limit = None):
         self._rects = []
+        self._rects_to_add = []
         self.limit = limit
     
     def update(self, *args, **kwargs):
@@ -11,9 +12,14 @@ class RectGroup:
             rect.update(*args, **kwargs)
 
     def add(self, rect: pg.Rect):
-        if len(self._rects) < self.limit:
+        if len(self._rects) + len(self._rects_to_add) < self.limit:
             if rect not in self._rects:
-                self._rects.append(rect)
+                if rect not in self._rects_to_add:
+                    self._rects_to_add.append(rect)
+    
+    def add_new_to_existing(self):
+        self._rects.extend(self._rects_to_add)
+        self._rects_to_add = []
 
     def remove(self, rect: pg.Rect):
         if rect in self._rects:

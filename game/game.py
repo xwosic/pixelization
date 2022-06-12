@@ -44,10 +44,12 @@ class Game:
         species = self.rects.group_by()
         self.rects.prezent_in_console(species)
         if not species:
-            Bacteria(None, self, 600, 300)
+            b = Bacteria(None, self, 600, 300)
+            b.color = 0xffffff
 
         self.screen.screen.fill(self.screen.background_color)
         self.rects.update(self)
+        self.rects.add_new_to_existing()
         pygame.display.update()
 
     def exit(self):

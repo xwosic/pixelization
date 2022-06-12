@@ -24,15 +24,16 @@ class Bacteria(Pixel):
         self._last_breed = datetime.now()
         self._birth_time = datetime.now()
         self._neighbours = {}
+        self._child_num = 0
     
     def use_dna(self):
-        time_constant = 0
         size_constant = 5
         self.width = int(self.dna.size * 10) + size_constant
         self.height = int(self.dna.size * 10) + size_constant
         self.color = self.dna.color
-        self.breed_period = timedelta(seconds=time_constant + self.dna.breed_period * 10)
-        self.lifetime = timedelta(seconds=time_constant + self.dna.lifetime * 10)
+        self.breed_period = timedelta(seconds=1 + self.dna.breed_period * 10)
+        self.max_num_of_children = int(self.dna.max_num_of_children * 10)
+        self.lifetime = timedelta(seconds=self.dna.lifetime * 10)
         
     def _is_moving(self):
         return self.dna.speed >= random()
@@ -102,17 +103,18 @@ class Bacteria(Pixel):
     def _breed_in_direction(self, direction: str):
         x = self.x
         y = self.y
-        if direction == 'left':
-            x = self.x - self.w
-        elif direction == 'right':
-            x = self.x + self.w
-        elif direction == 'top':
-            y = self.y - self.h
-        elif direction == 'bottom':
-            y = self.y + self.h
         child = Bacteria(self.dna, self.game, x, y)
+        if direction == 'left':
+            child.x -= child.w
+        elif direction == 'right':
+            child.x += child.w
+        elif direction == 'top':
+            child.y -= child.h
+        elif direction == 'bottom':
+            child.y += child.h
         self._last_breed = datetime.now()
         self._neighbours[direction].append(child)
+        self._child_num += 1
             
     def move(self, direction):
         if direction:
@@ -121,15 +123,15 @@ class Bacteria(Pixel):
                 if go:
                     go()
     
-    def _has_energy(self):
-        return True
+    def _which_child(self):
+        return self._child_num < self.max_num_of_children
     
     def _breed_period(self):
         return self.breed_period < datetime.now() - self._last_breed
     
     def breed(self, direction):
         if direction:
-            if self._has_energy():
+            if self._which_child():
                 if self._breed_period():
                     self._breed_in_direction(direction)  
     
