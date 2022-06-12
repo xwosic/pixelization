@@ -16,6 +16,7 @@ class DNA:
     mutate_ratio: fraction
     hp: fraction
     speed: fraction
+    size: fraction
 
     def __init__(self, parent: DNA = None):
         """
