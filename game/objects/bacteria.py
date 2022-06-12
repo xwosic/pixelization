@@ -33,7 +33,7 @@ class Bacteria(Pixel):
         self.color = self.dna.color
         self.breed_period = timedelta(seconds=1 + self.dna.breed_period * 10)
         self.max_num_of_children = int(self.dna.max_num_of_children * 10)
-        self.lifetime = timedelta(seconds=self.dna.lifetime * 10)
+        self.lifetime = timedelta(seconds=self.dna.lifetime * 60)
         
     def _is_moving(self):
         return self.dna.speed >= random()
@@ -107,11 +107,11 @@ class Bacteria(Pixel):
         if direction == 'left':
             child.x -= child.w
         elif direction == 'right':
-            child.x += child.w
+            child.x += self.w
         elif direction == 'top':
             child.y -= child.h
         elif direction == 'bottom':
-            child.y += child.h
+            child.y += self.h
         self._last_breed = datetime.now()
         self._neighbours[direction].append(child)
         self._child_num += 1
@@ -148,8 +148,8 @@ class Bacteria(Pixel):
         # interact (hunt, share)
         if empty_direction is not None:
             self.breed(empty_direction)
-            empty_direction = self._choose_empty_direction()
-            self.move(empty_direction)
+            # empty_direction = self._choose_empty_direction()
+            # self.move(empty_direction)
         self.dies()
         return super().update(game.screen.screen, *args, **kwargs)
     
