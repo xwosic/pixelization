@@ -42,7 +42,7 @@ class Game:
 
     def update(self):
         species = self.rects.group_by()
-        print(species)
+        self.rects.prezent_in_console(species)
         if not species:
             Bacteria(None, self, 600, 300)
 

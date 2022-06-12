@@ -1,5 +1,5 @@
+import os
 import pygame as pg
-from itertools import groupby
 
 class RectGroup:
     def __init__(self, limit = None):
@@ -35,3 +35,8 @@ class RectGroup:
                 result[name] += 1
         return result
 
+    def prezent_in_console(self, groups: dict):
+        # clear console
+        os.system('cls' if os.name=='nt' else 'clear')
+        for name, number in groups.items():
+            print(name, number * '#')
