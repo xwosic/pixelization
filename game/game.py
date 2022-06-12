@@ -21,13 +21,6 @@ class Game:
         pygame.init()
         self.screen = Screen(tittle='pixelution', width=1200, height=600)
         self.running = True
-
-        # for i in range(20):
-        #     Bacteria(None, self, 15 * i, 100)
-        
-        b1 = Bacteria(None, self, 600, 300)
-        # b2 = Bacteria(b1.dna, self, 600, 300)
-        # b3 = Bacteria(b2.dna, self, 600, 300)
     
     def on_event(self, event):
         if event.type == pygame.QUIT:
@@ -48,7 +41,11 @@ class Game:
             self.on_event(event)
 
     def update(self):
-        print(self.rects.group_by())
+        species = self.rects.group_by()
+        print(species)
+        if not species:
+            Bacteria(None, self, 600, 300)
+
         self.screen.screen.fill(self.screen.background_color)
         self.rects.update(self)
         pygame.display.update()
