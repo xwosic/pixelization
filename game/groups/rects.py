@@ -1,17 +1,19 @@
 import pygame as pg
-
+from itertools import groupby
 
 class RectGroup:
-    def __init__(self):
+    def __init__(self, limit = None):
         self._rects = []
+        self.limit = limit
     
     def update(self, *args, **kwargs):
         for rect in self._rects:
             rect.update(*args, **kwargs)
 
     def add(self, rect: pg.Rect):
-        if rect not in self._rects:
-            self._rects.append(rect)
+        if len(self._rects) < self.limit:
+            if rect not in self._rects:
+                self._rects.append(rect)
 
     def remove(self, rect: pg.Rect):
         if rect in self._rects:
@@ -22,3 +24,14 @@ class RectGroup:
 
     def __getitem__(self, key: int):
         return self._rects[key]
+    
+    def group_by(self):
+        result = {}
+        for rect in self._rects:
+            name = str(rect)
+            if name not in result:
+                result[name] = 1
+            else:
+                result[name] += 1
+        return result
+

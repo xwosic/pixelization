@@ -17,6 +17,9 @@ class DNA:
     hp: fraction
     speed: fraction
     size: fraction
+    breed_period: fraction
+    lifetime: fraction
+    foo: fraction
 
     def __init__(self, parent: DNA = None):
         """
@@ -68,7 +71,7 @@ class DNA:
         bits_per_feature = int(bits_num / features_num)
         filled_bits_num = bits_per_feature * features_num
         final_binary = ''
-        for value in self.__dict__.values(): # value: 0.6
+        for value in self.__dict__.values():
             fill_chunk = 1.0 / bits_per_feature
             chunks_num = int(value / fill_chunk)
             chunks_num_bin = str(bin(chunks_num)).lstrip('0b')
@@ -76,9 +79,10 @@ class DNA:
             final_binary = final_binary + chunks_num_bin
         
         final_binary = '0b' + '0' * (bits_num - filled_bits_num) + final_binary
-        result = str(hex(int(final_binary, 2)))
-        zeros_to_add = 8 - len(result)
-        unique_color = '0x' + '0' * zeros_to_add + result.lstrip('0x')
+        unique_color = str(hex(int(final_binary, 2)))
+        unique_color = unique_color[2:]
+        zeros_to_add = 6 - len(unique_color)
+        unique_color = '0x' + '0' * zeros_to_add + unique_color
         return unique_color
 
     def random_dna(self):

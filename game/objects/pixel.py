@@ -22,7 +22,11 @@ class Pixel(pg.Rect):
         self.remove_from_groups()
     
     def draw(self, surface: pg.Surface):
-        pg.draw.rect(surface, self.color, self)
+        try:
+            pg.draw.rect(surface, self.color, self)
+        except ValueError as er:
+            print('invalid color', self.color)
+            raise
 
     def update(self, surface: pg.Surface, *args, **kwargs):
         self.draw(surface)
