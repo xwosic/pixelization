@@ -86,13 +86,13 @@ class Bacteria(Pixel):
 
     def _choose_occupied_direction(self):
         choises = []
-        if not self._neighbours['left']:
+        if self._neighbours['left']:
             choises.append('left')
-        if not self._neighbours['right']:
+        if self._neighbours['right']:
             choises.append('right')
-        if not self._neighbours['top']:
+        if self._neighbours['top']:
             choises.append('top')
-        if not self._neighbours['bottom']:
+        if self._neighbours['bottom']:
             choises.append('bottom')
         if choises:
             return choice(choises)
@@ -148,8 +148,8 @@ class Bacteria(Pixel):
         # interact (hunt, share)
         if empty_direction is not None:
             self.breed(empty_direction)
-            # empty_direction = self._choose_empty_direction()
-            # self.move(empty_direction)
+            empty_direction = self._choose_empty_direction()
+            self.move(empty_direction)
         self.dies()
         return super().update(game.screen.screen, *args, **kwargs)
     
