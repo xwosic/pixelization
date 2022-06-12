@@ -17,14 +17,10 @@ class Bacteria(Pixel):
     def use_dna(self):
         self.width = int(self.dna.size * 10) + 5
         self.height = int(self.dna.size * 10) + 5
-    
-    def _is_moving(self, chance: float = None):
-        if chance is None:
-            chance = random()
-        if self.dna.speed >= chance:
-            return True
-        else:
-            return False
+        self.color = self.dna.color
+        
+    def _is_moving(self):
+        return self.dna.speed >= random()
 
     def _move_left(self):
         self.x -= self.width
@@ -81,7 +77,8 @@ class Bacteria(Pixel):
             go()
 
     def update(self, game: Game, *args, **kwargs):
-        # interact
+        # interact (hunt, share)
+        # eat or die
         # breed
         # movement
         self.move(game.rects)

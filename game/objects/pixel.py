@@ -5,7 +5,6 @@ from game.groups.rects import RectGroup
 class Pixel(pg.Rect):
     def __init__(self, *args, groups: Optional[List[RectGroup]], **kwargs):
         pg.Rect.__init__(self, *args, **kwargs)
-        self.color = 0xff0000
         self.groups = groups
         self.add_to_groups(self.groups)
     

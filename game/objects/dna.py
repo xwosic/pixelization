@@ -27,6 +27,8 @@ class DNA:
             self._get_features_from_parent(**parent.mutate())
         else:
             self = self.random_dna()
+        
+        self.color = self._unique_color()
     
     def mutate(self):
         """
@@ -35,8 +37,9 @@ class DNA:
         """
         child_dna = {}
         for feature, value in self.__dict__.items():
-            mutation = self._get_mutation(value)
-            child_dna[feature] = fraction(mutation)
+            if feature != 'color':
+                mutation = self._get_mutation(value)
+                child_dna[feature] = fraction(mutation)
         
         return child_dna
     
@@ -55,6 +58,28 @@ class DNA:
         polarization = choice([-1, 1])
         mutation = self.mutate_ratio * polarization
         return value + mutation * value
+    
+    def _unique_color(self):
+        """
+        Create unique 24-bit hex "color hash" from all features.
+        """
+        bits_num = 24
+        features_num = len(self.__dict__)
+        bits_per_feature = int(bits_num / features_num)
+        filled_bits_num = bits_per_feature * features_num
+        final_binary = ''
+        for value in self.__dict__.values(): # value: 0.6
+            fill_chunk = 1.0 / bits_per_feature
+            chunks_num = int(value / fill_chunk)
+            chunks_num_bin = str(bin(chunks_num)).lstrip('0b')
+            chunks_num_bin = '0' * (bits_per_feature - len(chunks_num_bin)) + chunks_num_bin
+            final_binary = final_binary + chunks_num_bin
+        
+        final_binary = '0b' + '0' * (bits_num - filled_bits_num) + final_binary
+        result = str(hex(int(final_binary, 2)))
+        zeros_to_add = 8 - len(result)
+        unique_color = '0x' + '0' * zeros_to_add + result.lstrip('0x')
+        return unique_color
 
     def random_dna(self):
         """

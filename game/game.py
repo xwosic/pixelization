@@ -11,7 +11,7 @@ class Game:
         self.screen: Screen = None
         # time
         self.clock = pygame.time.Clock()
-        self.FPS = 5
+        self.FPS = 10
         # states
         self.running = False
         # everything is rect
@@ -24,7 +24,11 @@ class Game:
 
         for i in range(20):
             Bacteria(None, self, 15 * i, 100)
-
+        
+        b1 = Bacteria(None, self, 600, 300)
+        b2 = Bacteria(b1.dna, self, 600, 300)
+        b3 = Bacteria(b2.dna, self, 600, 300)
+    
     def on_event(self, event):
         if event.type == pygame.QUIT:
             self.running = False
